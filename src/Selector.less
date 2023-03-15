@@ -1,0 +1,242 @@
+@import (inline) '../node_modules/bee-button/build/Button.css';
+@import (inline) '../node_modules/bee-modal/build/Modal.css';
+@import (inline) '../node_modules/bee-icon/build/Icon.css';
+@import (inline) '../node_modules/bee-checkbox/build/Checkbox.css';
+@import (inline) '../node_modules/bee-tabs/build/Tabs.css';
+@import (inline) '../node_modules/bee-tree/build/Tree.css';
+@import (inline) '../node_modules/bee-pagination/build/Pagination.css';
+@import (inline) '../node_modules/bee-menus/build/Menu.css';
+@import (inline) '../node_modules/bee-table/build/Table.css';
+// import 'bee-button/build/Button.css'
+// import 'bee-modal/build/Modal.css'
+// import 'bee-icon/build/Icon.css'
+// import 'bee-checkbox/build/Checkbox.css'
+// import 'bee-tabs/build/Tabs.css'
+// import 'bee-tree/build/Tree.css'
+// import 'bee-pagination/build/Pagination.css'
+// import 'bee-menus/build/Menu.css'
+// import 'bee-table/build/Table.css'
+// 清除Modal Body的浮动
+
+// @import (inline) '../node_modules/bee-button/build/Button.css';
+.u-modal-body::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.selectDialog {
+  padding-left: 0!important;
+}
+// 覆盖tabs默认样式
+.deptTitle .u-tabs-tab {
+  width: 96px;
+  height: 40px!important;
+  line-height: 40px;
+  text-align: center;
+  padding: 0!important;
+  font-size: 12px;
+  margin-right: 0!important;
+}
+.deptTitle .u-tabs-tab {
+  margin-left: 16px;
+}
+.deptTitle .u-tabs-ink-bar {
+  width: 96px;
+}
+.deptTitle .u-tabs-bar {
+  margin-bottom: 0!important;
+}
+
+.fll {
+  float: left;
+}
+.flr {
+  float: right;
+}
+.mt12 {
+  margin-top: 12px;
+}
+.clearfix {
+  content: "";
+  display: block;
+  clear: both;
+}
+.selectModalContainer .selectModalBody {
+  padding: 0!important;
+}
+.selectContainer {
+  width: 1198px;
+  height: 340px;
+  border-top: 1px solid #E4E4E4;
+  border-bottom: 1px solid #E4E4E4;
+  // box-sizing: border-box;
+}
+.headerTitle {
+  font-size: 14px;
+  color: #666;
+}
+.cancelBtn {
+  background:rgba(229,233,236,1);
+  border-radius:4px;
+  margin-right: 15px;
+}
+.rc-s-left {
+  width: 739px;
+  height: 460;
+  float: left;
+  border-right: 1px solid #C8C8C8;
+}
+.rc-s-right {
+  width: 458px;
+  float: right;
+}
+.deptTitle {
+  margin-bottom: 0;
+}
+.searchWrapper {
+  position: relative;
+  height: 48px;
+  line-height: 48px;
+  color: #ccc;
+  border-bottom: 1px solid #C1C7D0;
+}
+.rc-s-search {
+  display: inline-block;
+  width: 240px;
+  height: 32px;
+  padding-left: 8px;
+  margin: 8px 0 8px 16px;
+  // line-height: 32px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #D9D9D9;
+  &:focus {
+    border: 1px solid #505766;
+  }
+}
+.searchIcon {
+  position: absolute;
+  top: 0;
+  left: 218px;
+  cursor: pointer;
+}
+.filterByCapital {
+  height: 40px;
+  line-height: 40px;
+  padding-left: 16px;
+  background: #F7F9FB;
+}
+.filterByCapital>li {
+  float: left;
+  width: 27.84px;
+  cursor: pointer;
+}
+.filterByCapital .choose {
+  color: #F53C32;
+}
+.selectedUser {
+  height: 40px;
+  line-height: 1;
+  background: #EBECF0;
+  padding: 0 16px;
+  border-bottom: 1px solid #8993A4;
+  box-sizing: border-box;
+  .color-selected {
+    color: #F53C32;
+  }
+  .clear {
+    color: #F53C32;
+    margin-left: 16px;
+    cursor: pointer;
+  }
+}
+.u-row-hover {
+  .deleteIcon {
+    font-size: 12px;
+    color: #54698D;
+    cursor: pointer;
+  }
+}
+.myTree {
+  float: left;
+  height: 240px;
+  width: 306px;
+  overflow-y: auto;
+}
+.orgTable {
+  float: left;
+  width: 431px;
+}
+.selector_pagination {
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end
+}
+.menuWrapper {
+  height: 320px;
+  overflow: auto;
+}
+.u-tree-searchable-filter {
+  color: #F53C32;
+}
+.u-modal .u-modal-dialog{
+  margin: 6% auto 0 !important
+}
+.we-box{
+  display: flex;
+
+}
+.we-left{
+  width: 170px;
+  min-height: 302px;
+  border-right: 1px solid #D9D9D9;
+}
+.rc-s-search-sm{
+  display: inline-block;
+  width: 130px;
+  height: 32px;
+  padding-left: 8px;
+  margin: 8px 0 8px 16px;
+  // line-height: 32px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #D9D9D9;
+  &:focus {
+    border: 1px solid #505766;
+  }
+}
+.searchIcon-sm {
+  position: absolute;
+  top: 0;
+  left: 138px;
+  cursor: pointer;
+}
+.we-searchWrapper{
+  position: relative;
+  height: 48px;
+  line-height: 48px;
+  color: #ccc;
+}
+.we-click{
+  padding: 2px;
+  border-radius: 2px;
+  font-size: 12px;
+  background-color: #fde4c0;
+}
+.we-list li{
+  padding: 5px 20px;
+}
+.we-list li span{
+  cursor: pointer;
+}
+.we-r{
+  width: 580px;
+}
+
+.selectContainer .u-table-thead th,.selectContainer .u-table table{
+  text-align: center;
+}
+.wechaTable{
+  width: 580px;
+}
+
