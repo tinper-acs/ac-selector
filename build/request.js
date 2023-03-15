@@ -38,7 +38,7 @@ function requestGet(url) {
     mode: 'cors' // no-cors, cors, *same-origin
 
   };
-  return fetch(url, option).then(function (response) {
+  return fetch(encodeURI(url), option).then(function (response) {
     if (response.ok) {
       return response.json();
     } else {

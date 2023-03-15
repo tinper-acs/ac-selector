@@ -104,7 +104,9 @@ var defaultProps = {
   tabConfig: [],
   tableData: [],
   treeConfig: [],
-  pageSize: 40
+  pageSize: 40,
+  isRule: true,
+  isOrg: true
 };
 
 var Selector =
@@ -929,7 +931,7 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this2), "treeOnSelect", function (info) {
-      var _info = encodeURI("[".concat(info, "]")); // console.log(_info)
+      var _info = ("[".concat(info, "]")); // console.log(_info)
 
 
       var url = "".concat(_this2.state.prefixUrl, "/user/org/user?pageSize=40&pageNo=1&orgIds=").concat(_info);
@@ -1198,7 +1200,7 @@ function (_React$Component) {
 
     _this2.orgTreeList = []; // 备份完整的组织树
 
-    _this2.state = {
+    _this2.state = _defineProperty({
       locale: props.locale,
       show: false,
       filterIndex: '',
@@ -1256,7 +1258,7 @@ function (_React$Component) {
       weIndex: '',
       weLeftVal: '',
       weSearchVal: ''
-    };
+    }, "prefixUrl", props.prefixUrl);
     return _this2;
   }
 
@@ -1287,63 +1289,10 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var mode = this.props.mode;
-
-      switch (mode) {
-        case 'dev':
-          this.setState({
-            prefixUrl: 'http://iuap-message-platform-web.test.app.yyuap.com/message-platform-web'
-          });
-          break;
-
-        case 'daily':
-          this.setState({
-            prefixUrl: 'https://u8cmsg-daily.yyuap.com/message-platform-web'
-          });
-          break;
-
-        case 'pre':
-          this.setState({
-            prefixUrl: 'https://msg-y3me-pre.diwork.com/message-platform-web'
-          });
-          break;
-
-        case 'diwork':
-          this.setState({
-            prefixUrl: 'https://msg-y3me-daily.yyuap.com/message-platform-web'
-          });
-          break;
-
-        case 'diwork-prod':
-          this.setState({
-            prefixUrl: 'https://message-yonsuite.diwork.com/message-platform-web'
-          });
-          break;
-
-        case 'iterate':
-          this.setState({
-            prefixUrl: 'http://iuap-message-platform-web.iteration.app.yyuap.com/message-platform-web'
-          });
-          break;
-
-        case 'dbox':
-          this.setState({
-            prefixUrl: 'https://message-dbox.yyuap.com/message-platform-web'
-          });
-          break;
-
-        case 'premises':
-          this.setState({
-            prefixUrl: window.$$msdomain + '/message-platform-web'
-          });
-          break;
-
-        default:
-          this.setState({
-            prefixUrl: 'https://u8cmsg-daily.yyuap.com/message-platform-web'
-          });
-          break;
-      }
+      // const { mode } = this.props
+      this.setState({
+        prefixUrl: this.props.prefixUrl
+      });
     } // 进入modal首先加载用户列表
 
   }, {
@@ -1362,7 +1311,9 @@ function (_React$Component) {
           weSearchVal = _this$state.weSearchVal;
       var _this$props = this.props,
           tabConfig = _this$props.tabConfig,
-          isWechat = _this$props.isWechat;
+          isWechat = _this$props.isWechat,
+          isRule = _this$props.isRule,
+          isOrg = _this$props.isOrg;
 
       var loopData = function loopData(data) {
         return data.map(function (item) {
@@ -1511,7 +1462,7 @@ function (_React$Component) {
         activePage: _this.state.rolePage.activePage,
         items: _this.state.rolePage.items,
         onSelect: _this.roleSelect
-      })), _react["default"].createElement(TabPane, {
+      })), isOrg ? _react["default"].createElement(TabPane, {
         tab: i18n[locale].org,
         key: 3
       }, _react["default"].createElement("div", {
@@ -1551,7 +1502,7 @@ function (_React$Component) {
         emptyText: function emptyText() {
           return _this.props.emptyText(i18n[locale].noData);
         }
-      })))), _react["default"].createElement(TabPane, {
+      })))) : null, isRule ? _react["default"].createElement(TabPane, {
         tab: i18n[locale].rule,
         key: 4
       }, _react["default"].createElement("div", {
@@ -1568,7 +1519,7 @@ function (_React$Component) {
       }, _react["default"].createElement(_tinper.Menu, {
         mode: 'inline',
         onClick: _this.menuClick
-      }, _this.state.ruleMenuList))), isWechat ? _react["default"].createElement(TabPane, {
+      }, _this.state.ruleMenuList))) : null, isWechat ? _react["default"].createElement(TabPane, {
         tab: i18n[locale].wechat,
         key: 0
       }, _react["default"].createElement("div", {
