@@ -14,17 +14,7 @@ import {
 } from './components/tinper'
 import './Selector.css'
 
-// import 'bee-button/build/Button.css'
-// import 'bee-modal/build/Modal.css'
-// import 'bee-icon/build/Icon.css'
-// import 'bee-tabs/build/Tabs.css'
-// import 'bee-pagination/build/Pagination.css'
-// import 'bee-menus/build/Menu.css'
-// import 'bee-checkbox/build/Checkbox.css'
-// import 'bee-tree/build/Checkbox.css'
-// import 'bee-table/build/Table.css'
-// import Table from 'bee-table'
-import multiSelect from 'bee-table/build/lib/multiSelect'
+const {multiSelect} = Table
 import { selectedUserCol, roleMultiCol, orgCol, multiColumns,pageLocale, wechatMultiCol } from './colmuns'
 import { requestGet } from './request'
 import {

@@ -4,18 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.requestGet = requestGet;
-
 function requestGet(url) {
   var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var data = option;
   var paramArr2 = {};
-
   for (var k in data) {
     paramArr2[k] = data[k];
   }
-
   var param = new URLSearchParams(paramArr2).toString();
-
   if (param.length > 0) {
     if (url.indexOf('?') >= 0) {
       url = url + '&' + param;
@@ -23,7 +19,6 @@ function requestGet(url) {
       url = url + '?' + param;
     }
   }
-
   option = {
     method: 'GET',
     // *GET, POST, PUT, DELETE, etc.
@@ -36,8 +31,8 @@ function requestGet(url) {
     //   'withCredentials': true
     // },
     mode: 'cors' // no-cors, cors, *same-origin
-
   };
+
   return fetch(encodeURI(url), option).then(function (response) {
     if (response.ok) {
       return response.json();

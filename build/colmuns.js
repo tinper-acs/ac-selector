@@ -3,12 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.pageLocale = exports.selectedUser = exports.selectData = exports.filterCaptial = exports.multiColumns = exports.orgCol = exports.wechatMultiCol = exports.roleMultiCol = exports.selectedUserCol = void 0;
-
+exports.wechatMultiCol = exports.selectedUserCol = exports.selectedUser = exports.selectData = exports.roleMultiCol = exports.pageLocale = exports.orgCol = exports.multiColumns = exports.filterCaptial = void 0;
 var _react = _interopRequireDefault(require("react"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 var selectedUserCol = {
   zh_CN: [{
     key: 'serialNumber',
@@ -16,7 +13,7 @@ var selectedUserCol = {
     dataIndex: 'number',
     width: 100,
     render: function render(text, record, index) {
-      return _react["default"].createElement("span", null, index + 1);
+      return /*#__PURE__*/_react["default"].createElement("span", null, index + 1);
     }
   }, {
     key: 'type',
@@ -35,7 +32,7 @@ var selectedUserCol = {
     dataIndex: 'number',
     width: 100,
     render: function render(text, record, index) {
-      return _react["default"].createElement("span", null, index + 1);
+      return /*#__PURE__*/_react["default"].createElement("span", null, index + 1);
     }
   }, {
     key: 'type',
@@ -54,7 +51,7 @@ var selectedUserCol = {
     dataIndex: 'number',
     width: 100,
     render: function render(text, record, index) {
-      return _react["default"].createElement("span", null, index + 1);
+      return /*#__PURE__*/_react["default"].createElement("span", null, index + 1);
     }
   }, {
     key: 'type',
@@ -109,7 +106,6 @@ wxAccountId: "gh_26b301786a30"
 wxOpenId: "oQzPCwf9c64gKKHzo8y2lxR5C5fs"
 weChatId: "wugqm"
 */
-
 exports.roleMultiCol = roleMultiCol;
 var wechatMultiCol = {
   zh_CN: [{
@@ -214,13 +210,14 @@ var orgCol = {
     dataIndex: 'mobile',
     width: 131
   }]
-}; // export const multiColumns = [
+};
+
+// export const multiColumns = [
 //   { key: 'name', title: '姓名', dataIndex: 'username', width: 100 },
 //   { key: 'orgName', title: '部门', dataIndex: 'orgName', width: 200 },
 //   { key: 'account', title: '账号(邮箱)', dataIndex: 'email', width: 200 },
 //   { key: 'phone', title: '手机号码', dataIndex: 'mobile', width: 150 }
 // ]
-
 exports.orgCol = orgCol;
 var multiColumns = {
   zh_CN: [{
@@ -300,7 +297,8 @@ var selectData = [{
   orgName: 'zbl部门1',
   type: '组织',
   typeCode: 2
-} // {
+}
+// {
 // 	orgId: '12497993059328',
 // 	orgName: 'zbl部门3',
 // 	type: '组织',
