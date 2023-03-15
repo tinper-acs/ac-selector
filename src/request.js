@@ -22,7 +22,7 @@ export function requestGet(url,option={}){
     // },
     mode: 'cors', // no-cors, cors, *same-origin
   }
-  return fetch(url,option) 
+  return fetch(encodeURI(url),option) 
           .then((response) => {
               if(response.ok){
                   return response.json()

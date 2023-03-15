@@ -90,14 +90,16 @@ const defaultProps = {
   tabConfig:[],
   tableData:[],
   treeConfig:[],
-  pageSize:40
+  pageSize:40,
+  isRule: true,
+  isOrg: true
 }
 
 class Selector extends React.Component {
   constructor(props) {
     super(props)
     this.orgTreeList = [] // 备份完整的组织树
-    this.state = {
+    this.state = Object.defineProperty({
       locale: props.locale,
       show: false,
       filterIndex: '', // 根据首字母筛选用户
@@ -138,7 +140,7 @@ class Selector extends React.Component {
       weIndex:'',
       weLeftVal:'',
       weSearchVal:''
-    }
+    }, 'prefixUrl', props.prefixUrl)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -166,55 +168,9 @@ class Selector extends React.Component {
   }
 
   componentDidMount() {
-    const { mode } = this.props
-    switch (mode) {
-      case 'dev':
-        this.setState({
-          prefixUrl:
-            'http://iuap-message-platform-web.test.app.yyuap.com/message-platform-web'
-        })
-        break
-      case 'daily':
-        this.setState({
-          prefixUrl: 'https://u8cmsg-daily.yyuap.com/message-platform-web'
-        })
-        break
-      case 'pre':
-        this.setState({
-          prefixUrl: 'https://msg-y3me-pre.diwork.com/message-platform-web'
-        })
-        break
-      case 'diwork':
-        this.setState({
-          prefixUrl: 'https://msg-y3me-daily.yyuap.com/message-platform-web'
-        })
-        break
-      case 'diwork-prod':
-        this.setState({
-          prefixUrl: 'https://message-yonsuite.diwork.com/message-platform-web'
-        })
-        break
-      case 'iterate':
-        this.setState({
-          prefixUrl: 'http://iuap-message-platform-web.iteration.app.yyuap.com/message-platform-web'
-        })
-        break
-      case 'dbox':
-        this.setState({
-          prefixUrl: 'https://message-dbox.yyuap.com/message-platform-web'
-        })
-        break
-      case 'premises':
-        this.setState({
-          prefixUrl: window.$$msdomain+'/message-platform-web'
-        })
-        break
-      default:
-        this.setState({
-          prefixUrl: 'https://u8cmsg-daily.yyuap.com/message-platform-web'
-        })
-        break
-    }
+    this.setState({
+      prefixUrl: this.props.prefixUrl
+    });
   }
 
   // 进入modal首先加载用户列表
@@ -962,7 +918,7 @@ class Selector extends React.Component {
 
   // tree select
   treeOnSelect = info => {
-    const _info = encodeURI(`[${info}]`) 
+    const _info = `[${info}]`
     // console.log(_info)
     let url = `${this.state.prefixUrl}/user/org/user?pageSize=40&pageNo=1&orgIds=${_info}`
     requestGet(url)
@@ -1193,7 +1149,7 @@ class Selector extends React.Component {
   render() {
     const _this = this
     const { locale,weArray,weList,weIndex,weLeftVal,weSearchVal } = this.state
-    const { tabConfig,isWechat } = this.props
+    const { tabConfig,isWechat,isRule,isOrg } = this.props
     const loopData = data =>
       data.map(item => {
         const index = item.orgName.indexOf(_this.state.orgInputValue)
@@ -1348,7 +1304,7 @@ class Selector extends React.Component {
                   />
                 </TabPane>
                 {/* <TabPane tab={'组织'} key={3}> */}
-                <TabPane tab={i18n[locale].org} key={3}>
+                {isOrg ? <TabPane tab={i18n[locale].org} key={3}>
                   <div className={'searchWrapper'}>
                     <input
                       onChange={_this.searchOrg}
@@ -1387,9 +1343,9 @@ class Selector extends React.Component {
                       />
                     </div>
                   </div>
-                </TabPane>
+                </TabPane> : null}
                 {/* <TabPane tab={'规则'} key={4}> */}
-                <TabPane tab={i18n[locale].rule} key={4}>
+                {isRule ? <TabPane tab={i18n[locale].rule} key={4}>
                   <div className={'searchWrapper'}>
                     <input
                       // placeholder={'请输入您要查找的规则'}
@@ -1403,7 +1359,7 @@ class Selector extends React.Component {
                       {_this.state.ruleMenuList}
                     </Menu>
                   </div>
-                </TabPane>
+                </TabPane> : null}
                 {/* <TabPane tab={'微信'} key={4}> */}
                 {isWechat?<TabPane tab={i18n[locale].wechat} key={0}>
                   <div className={'we-box'}>

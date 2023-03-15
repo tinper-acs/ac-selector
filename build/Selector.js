@@ -931,7 +931,7 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this2), "treeOnSelect", function (info) {
-      var _info = ("[".concat(info, "]")); // console.log(_info)
+      var _info = "[".concat(info, "]"); // console.log(_info)
 
 
       var url = "".concat(_this2.state.prefixUrl, "/user/org/user?pageSize=40&pageNo=1&orgIds=").concat(_info);
@@ -1200,7 +1200,7 @@ function (_React$Component) {
 
     _this2.orgTreeList = []; // 备份完整的组织树
 
-    _this2.state = _defineProperty({
+    _this2.state = Object.defineProperty({
       locale: props.locale,
       show: false,
       filterIndex: '',
@@ -1258,7 +1258,7 @@ function (_React$Component) {
       weIndex: '',
       weLeftVal: '',
       weSearchVal: ''
-    }, "prefixUrl", props.prefixUrl);
+    }, 'prefixUrl', props.prefixUrl);
     return _this2;
   }
 
@@ -1289,7 +1289,6 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      // const { mode } = this.props
       this.setState({
         prefixUrl: this.props.prefixUrl
       });

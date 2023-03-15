@@ -1,25 +1,31 @@
 {
  "name": "ac-selector",
- "version": "2.2.40",
+ "version": "2.2.50",
  "description": "选人组件",
  "keywords": [
   "react",
   "react-component",
   "ac-selector",
   "iuap-design",
-  "tinper-bee",
+  "tinper-next",
   "selector"
  ],
  "engines": {
   "node": ">=4.0.0"
  },
- "homepage": "https://github.com/GRAMMAC1/ac-selector",
- "author": "zhonggzh@yonyou.com",
- "repository": "https://github.com/GRAMMAC1/ac-selector",
- "bugs": "https://github.com/GRAMMAC1/ac-selector/issues",
+ "homepage": "https://github.com/tinper-acs/ac-selector",
+ "author": "lixyang@yonyou.com",
+ "repository": "https://github.com/tinper-acs/ac-selector",
+ "bugs": "https://github.com/tinper-acs/ac-selector/issues",
  "license": "MIT",
  "main": "./build/index.js",
  "types": "index.d.ts",
+ "files": [
+  "package.json",
+  "dist",
+  "build",
+  "src"
+],
  "scripts": {
   "dev": "webpack-dev-server --config ./config/webpack.dev.js",
   "build": "rm -rf build && lessc ./src/selector.less ./build/Selector.css && babel src -d build",
