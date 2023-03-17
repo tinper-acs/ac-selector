@@ -1094,7 +1094,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       weIndex: '',
       weLeftVal: '',
       weSearchVal: ''
-    }, 'prefixUrl', props.prefixUrl);
+    }, 'prefixUrl', {
+      value: props.prefixUrl
+    });
     return _this2;
   }
   _createClass(Selector, [{

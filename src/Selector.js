@@ -130,7 +130,7 @@ class Selector extends React.Component {
       weIndex:'',
       weLeftVal:'',
       weSearchVal:''
-    }, 'prefixUrl', props.prefixUrl)
+    }, 'prefixUrl', {value: props.prefixUrl})
   }
 
   componentWillReceiveProps(nextProps) {
