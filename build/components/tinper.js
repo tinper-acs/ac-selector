@@ -58,4 +58,3 @@ Object.defineProperty(exports, "Tree", {
   }
 });
 var _nextUi = require("@tinper/next-ui");
-require("@tinper/next-ui/dist/tinper-next.css");

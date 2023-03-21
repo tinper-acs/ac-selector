@@ -28,7 +28,7 @@
  ],
  "scripts": {
   "dev": "webpack-dev-server --config ./config/webpack.dev.js",
-  "build": "rm -rf build && lessc ./src/selector.less ./build/Selector.css && babel src -d build",
+  "build": "rm -rf build && lessc ./src/Selector.less ./build/Selector.css && babel src -d build",
   "compiler": "babel src -d build"
  },
  "dependencies": {
