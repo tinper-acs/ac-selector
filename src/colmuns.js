@@ -38,7 +38,18 @@ export const selectedUserCol = {
 			dataIndex: 'reciving',
 			width: 250
 		}
-	]
+	],
+	id_ID: [
+		{
+			key: 'serialNumber',
+			title: 'Nomor seri',
+			dataIndex: 'number',
+			width: 100,
+			render: (text, record, index) => <span>{index + 1}</span>
+		},
+		{ key: 'type', title: 'jenis', dataIndex: 'type', width: 100 },
+		{ key: 'recivingObj', title: 'Objek yang diterima', dataIndex: 'reciving', width: 250 }
+	],
 }
 
 export const roleMultiCol = {
@@ -53,6 +64,10 @@ export const roleMultiCol = {
 	en_US: [
 		{ key: 'rolename', title: 'Role Name', dataIndex: 'roleName', width: 100 },
 		{ key: 'rolecode', title: 'Role Code', dataIndex: 'roleCode' }
+	],
+	id_ID: [
+		{ key: 'rolename', title: 'Nama peran', dataIndex: 'roleName', width: 100 },
+		{ key: 'rolecode', title: 'Kode peran', dataIndex: 'roleCode' }
 	],
 }
 /*
@@ -83,6 +98,13 @@ export const wechatMultiCol = {
 		{ key: 'phone', title: 'Cellphone Number', dataIndex: 'phone' },
 		{ key: 'email', title: 'Email', dataIndex: 'email' },
 	],
+	id_ID: [
+		{ key: 'username', title: 'nama', dataIndex: 'username',  },
+		{ key: 'weChatId', title: 'Sinyal mikro', dataIndex: 'weChatId' },
+		{ key: 'phone', title: 'Nomor ponsel', dataIndex: 'phone' },
+		{ key: 'email', title: 'Kotak surat', dataIndex: 'email' },
+
+	],
 }
 
 export const orgCol = {
@@ -105,7 +127,12 @@ export const orgCol = {
 			dataIndex: 'mobile',
 			width: 131
 		}
-	]
+	],
+	id_ID: [
+		{ key: 'orgName', title: 'nama', dataIndex: 'username', width: 150 },
+		{ key: 'orgMail', title: 'Nomor rekening (kotak surat)', dataIndex: 'email', width: 150 },
+		{ key: 'orgPhone', title: 'ponsel', dataIndex: 'mobile', width: 131 }
+	],
 }
 
 // export const multiColumns = [
@@ -132,7 +159,13 @@ export const multiColumns = {
 		{ key: 'orgName', title: 'Department', dataIndex: 'orgName', width: 200 },
 		{ key: 'account', title: 'Account(Email)', dataIndex: 'email', width: 200 },
 		{ key: 'phone', title: 'Cellphone Number', dataIndex: 'mobile', width: 150 }
-	]
+	],
+	id_ID: [
+		{ key: 'name', title: 'nama', dataIndex: 'username', width: 100 },
+		{ key: 'orgName', title: 'departemen', dataIndex: 'orgName', width: 200 },
+		{ key: 'account', title: 'Nomor rekening (kotak surat)', dataIndex: 'email', width: 200 },
+		{ key: 'phone', title: 'Nomor ponsel', dataIndex: 'mobile', width: 150 }
+	],
 }
 
 export const filterCaptial = [
@@ -275,5 +308,12 @@ export const pageLocale = {
 	'show': 'page',
 	'goto':'goto',
 	'page':'',
-	'ok':'ok'}
+	'ok':'ok'},
+	id_ID:{'lang':'id_ID',
+	'total': 'Total',
+	'items': 'item',
+	'show': 'Tampilkan',
+	'goto':'Pergi ke',
+	'page':'',
+	'ok':'Baik'}
 }

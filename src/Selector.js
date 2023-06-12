@@ -52,7 +52,7 @@ const noop = function() {}
  */
 
 const propTypes = {
-  locale:PropTypes.oneOf(['zh_CN', 'zh_TW', 'en_US']),
+  locale:PropTypes.oneOf(['zh_CN', 'zh_TW', 'en_US', 'id_ID']),
   show: PropTypes.bool.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
