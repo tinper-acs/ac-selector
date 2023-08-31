@@ -55,6 +55,26 @@ return (
     ruleList={[{name:'1',id:'2',a:'d'}]}
     isWechat={true}
     pageSize={3}
+    staffSearchContent={()=>{
+      return {
+        url: 'www.baidu.com/sdf/sdf',
+        option: {
+          method: 'POST',
+          body: JSON.stringify({a:1, b:2}),
+          // ...
+        }
+      }
+    }}
+    roleSearchContent={()=>{
+      return {
+        url: 'www.yonyou.com/sdf/sd3f',
+        option: {
+          method: 'POST',
+          body: JSON.stringify({a:3, b:4}),
+          // ...
+        }
+      }
+    }}
     // selectedUser={selectedUser}
     // selectedOther={selectData}
     // tabHandleFunc={(tabMark, index, e) => {

@@ -8,14 +8,14 @@ var _react = _interopRequireDefault(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var langs = _interopRequireWildcard(require("./lang"));
 var _tinper = require("./components/tinper");
-require("./Selector.css");
+require("../Selector.css");
 var _colmuns = require("./colmuns");
 var _request = require("./request");
 var _utils = require("./utils");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -32,8 +32,8 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -50,7 +50,7 @@ var noop = function noop() {};
  */
 
 var propTypes = {
-  locale: _propTypes["default"].oneOf(['zh_CN', 'zh_TW', 'en_US']),
+  locale: _propTypes["default"].oneOf(['zh_CN', 'zh_TW', 'en_US', 'id_ID']),
   show: _propTypes["default"].bool.isRequired,
   onConfirm: _propTypes["default"].func.isRequired,
   onClose: _propTypes["default"].func.isRequired,
@@ -94,13 +94,17 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this2), "didFinish", function () {
       var _this2$props = _this2.props,
         selectedUser = _this2$props.selectedUser,
-        selectedOther = _this2$props.selectedOther;
+        selectedOther = _this2$props.selectedOther,
+        staffSearchContent = _this2$props.staffSearchContent;
       _this2.setState({
         selectedUserData: (0, _utils.setUserReciving)(selectedUser),
         selectedOtherList: (0, _utils.setOtherReciving)(selectedOther)
       });
       var url = "".concat(_this2.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=");
-      (0, _request.requestGet)(url).then(function (response) {
+      var fetchContent = _objectSpread({
+        url: url
+      }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
+      (0, _request.requestFetch)(fetchContent).then(function (response) {
         if (response.status === 1 && response.data !== null) {
           var selectedUserData = _this2.state.selectedUserData;
           var _newList = (0, _utils.resetChecked)(response.data.values, 'userid');
@@ -125,14 +129,24 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this2), "search", function (e) {
       var activeKey = _this2.state.activeKey,
         _this = _assertThisInitialized(_this2);
+      var _this2$props2 = _this2.props,
+        staffSearchContent = _this2$props2.staffSearchContent,
+        roleSearchContent = _this2$props2.roleSearchContent;
       var url = '';
+      var fetchContent;
       if (activeKey === '1') {
         url = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(e.target.value);
+        fetchContent = _objectSpread({
+          url: url
+        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
       } else if (activeKey === '2') {
         url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(e.target.value);
+        fetchContent = _objectSpread({
+          url: url
+        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url)) || {});
       }
       if (e.keyCode === 13 || e.keyCode === 108) {
-        (0, _request.requestGet)(url).then(function (response) {
+        (0, _request.requestFetch)(fetchContent).then(function (response) {
           if (response.status === 1 && response.data !== null) {
             if (activeKey === '1') {
               var _list = [],
@@ -190,17 +204,26 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     });
     _defineProperty(_assertThisInitialized(_this2), "clickSearch", function () {
       var _this = _assertThisInitialized(_this2);
-      var searchUrl;
+      var url;
       var _this2$state = _this2.state,
         activeKey = _this2$state.activeKey,
         staffInputValue = _this2$state.staffInputValue,
         roleInputValue = _this2$state.roleInputValue;
+      var _this2$props3 = _this2.props,
+        staffSearchContent = _this2$props3.staffSearchContent,
+        roleSearchContent = _this2$props3.roleSearchContent;
       if (activeKey === '1') {
-        searchUrl = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(staffInputValue);
+        url = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(staffInputValue);
+        fetchContent = _objectSpread({
+          url: url
+        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
       } else {
-        searchUrl = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(roleInputValue);
+        url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(roleInputValue);
+        fetchContent = _objectSpread({
+          url: url
+        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url)) || {});
       }
-      (0, _request.requestGet)(searchUrl).then(function (response) {
+      (0, _request.requestFetch)(fetchContent).then(function (response) {
         if (response.status === 1 && response.data !== null) {
           if (activeKey === '1') {
             var _list = [],
@@ -655,6 +678,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this2), "onChange", function (activeKey, node) {
       // console.log(activeKey,node)
       var _this = _assertThisInitialized(_this2);
+      var _this2$props4 = _this2.props,
+        staffSearchContent = _this2$props4.staffSearchContent,
+        roleSearchContent = _this2$props4.roleSearchContent;
       if (activeKey <= 4) {
         _this2.setState({
           "extends": '',
@@ -671,7 +697,10 @@ var Selector = /*#__PURE__*/function (_React$Component) {
 
       if (activeKey === '1') {
         var url = "".concat(_this2.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=");
-        (0, _request.requestGet)(url).then(function (response) {
+        var _fetchContent = _objectSpread({
+          url: url
+        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
+        (0, _request.requestFetch)(_fetchContent).then(function (response) {
           if (response.status === 1 && response.data !== null) {
             var selectedUserData = _this2.state.selectedUserData;
             var _newList = (0, _utils.resetChecked)(response.data.values, 'userid');
@@ -694,9 +723,13 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       }
       if (activeKey === '2') {
         var _url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=");
+        var _fetchContent2 = _objectSpread({
+          url: _url
+        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(_url)) || {});
+
         // let { roleShowList } = this.state
         // if (!roleShowList.length) {
-        (0, _request.requestGet)(_url).then(function (response) {
+        (0, _request.requestFetch)(_fetchContent2).then(function (response) {
           if (response.status === 1) {
             var selectedOtherList = _this2.state.selectedOtherList;
             var _page = {
@@ -720,7 +753,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       } else if (activeKey === '3') {
         var selectedOtherList = _this2.state.selectedOtherList;
         var _url2 = "".concat(_this.state.prefixUrl, "/user/org/list?pageSize=40&pageNo=1&orgIds=");
-        (0, _request.requestGet)(_url2).then(function (response) {
+        (0, _request.requestFetch)({
+          url: _url2
+        }).then(function (response) {
           if (response.status === 1) {
             _this2.setState({
               orgTreeList: response.data
@@ -752,7 +787,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
           });
         } else {
           var _url3 = "".concat(_this.state.prefixUrl, "/user/rules?documentNo=").concat(_this2.props.documentNo, "&documentName=").concat(_this2.props.documentName);
-          (0, _request.requestGet)(_url3).then(function (response) {
+          (0, _request.requestFetch)({
+            url: _url3
+          }).then(function (response) {
             if (response.status === 1) {
               var menuList = [{
                 id: 'root-0',
@@ -770,7 +807,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       }
       if (activeKey === '0') {
         var _url4 = "".concat(_this.state.prefixUrl, "/user/wechat/accounts");
-        (0, _request.requestGet)(_url4).then(function (res) {
+        (0, _request.requestFetch)({
+          url: _url4
+        }).then(function (res) {
           var id = res.data && res.data[0] ? res.data[0].accountId : '';
           _this2.setState({
             weListDB: res.data,
@@ -787,7 +826,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this2), "weGetData", function (id) {
       var keyWords = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
       var url = "".concat(_this2.state.prefixUrl, "/user/wechat/users?accountId=").concat(id, "&keyWords=").concat(keyWords);
-      (0, _request.requestGet)(url).then(function (res) {
+      (0, _request.requestFetch)({
+        url: url
+      }).then(function (res) {
         // console.log(res)
         var _newList = (0, _utils.resetChecked)(res.data, 'wxOpenId');
         var list = (0, _utils.setChecked)(_newList, _this2.state.selectedOtherList, 'wxOpenId');
@@ -813,7 +854,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       var _info = "[".concat(info, "]");
       // console.log(_info)
       var url = "".concat(_this2.state.prefixUrl, "/user/org/user?pageSize=40&pageNo=1&orgIds=").concat(_info);
-      (0, _request.requestGet)(url).then(function (response) {
+      (0, _request.requestFetch)({
+        url: url
+      }).then(function (response) {
         if (response.status === 1) {
           var _newList = (0, _utils.resetChecked)(response.data, 'userid');
           _this2.setState({
@@ -881,9 +924,13 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     // 角色分页
     _defineProperty(_assertThisInitialized(_this2), "roleSelect", function (e) {
       var _this = _assertThisInitialized(_this2);
+      var roleSearchContent = _this2.props.roleSearchContent;
       var url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=").concat(e, "&keyword=");
+      var fetchContent = _objectSpread({
+        url: url
+      }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url)) || {});
       var selectedOtherList = _this2.state.selectedOtherList;
-      (0, _request.requestGet)(url).then(function (response) {
+      (0, _request.requestFetch)(fetchContent).then(function (response) {
         if (response.status === 1 && response.data !== null) {
           var obj = {
             activePage: e,
@@ -904,8 +951,12 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     // 用户分页
     _defineProperty(_assertThisInitialized(_this2), "staffSelect", function (e) {
       var _this = _assertThisInitialized(_this2);
+      var staffSearchContent = _this2.props.staffSearchContent;
       var url = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=").concat(e, "&keyword=");
-      (0, _request.requestGet)(url).then(function (response) {
+      var fetchContent = _objectSpread({
+        url: url
+      }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
+      (0, _request.requestFetch)(fetchContent).then(function (response) {
         // console.log(response)
         if (response.status === 1 && response.data !== null) {
           var obj = {

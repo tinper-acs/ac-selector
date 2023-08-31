@@ -12,11 +12,11 @@ import {
   Pagination,
   Menu
 } from './components/tinper'
-import './Selector.css'
+import '../Selector.css'
 
 const {multiSelect} = Table
 import { selectedUserCol, roleMultiCol, orgCol, multiColumns,pageLocale, wechatMultiCol } from './colmuns'
-import { requestGet } from './request'
+import { requestFetch } from './request'
 import {
   resetChecked,
   setChecked,
@@ -165,13 +165,14 @@ class Selector extends React.Component {
 
   // 进入modal首先加载用户列表
   didFinish = () => {
-    let { selectedUser, selectedOther } = this.props
+    let { selectedUser, selectedOther, staffSearchContent } = this.props
     this.setState({
       selectedUserData: setUserReciving(selectedUser),
       selectedOtherList: setOtherReciving(selectedOther)
     })
     const url = `${this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=`
-    requestGet(url)
+    const fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+    requestFetch(fetchContent)
       .then(response => {
         if (response.status === 1 && response.data !== null) {
           const { selectedUserData } = this.state
@@ -197,15 +198,20 @@ class Selector extends React.Component {
   // 搜索
   search = e => {
     const { activeKey } = this.state,
-      _this = this
+    _this = this
+    const {staffSearchContent, roleSearchContent} = this.props
     let url = ''
+    let fetchContent
     if (activeKey === '1') {
       url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${e.target.value}`
+      fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+
     } else if (activeKey === '2') {
       url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${e.target.value}`
+      fetchContent = {url, ...(roleSearchContent?.(url) || {})};
     }
     if (e.keyCode === 13 || e.keyCode === 108) {
-      requestGet(url)
+      requestFetch(fetchContent)
         .then(response => {
           if (response.status === 1 && response.data !== null) {
             if (activeKey === '1') {
@@ -279,14 +285,17 @@ class Selector extends React.Component {
   }
   clickSearch = () => {
     const _this = this
-    let searchUrl
+    let url
     const { activeKey, staffInputValue, roleInputValue } = this.state
+    const {staffSearchContent, roleSearchContent} = this.props
     if (activeKey === '1') {
-      searchUrl = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${staffInputValue}`
+      url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${staffInputValue}`
+      fetchContent = {url, ...(staffSearchContent?.(url) || {})};
     } else {
-      searchUrl = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${roleInputValue}`
+      url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${roleInputValue}`
+      fetchContent = {url, ...(roleSearchContent?.(url) || {})};
     }
-    requestGet(searchUrl)
+    requestFetch(fetchContent)
       .then(response => {
         if (response.status === 1 && response.data !== null) {
           if (activeKey === '1') {
@@ -742,6 +751,7 @@ class Selector extends React.Component {
   onChange = (activeKey,node) => {
     // console.log(activeKey,node)
     const _this = this
+    const {staffSearchContent, roleSearchContent} = this.props
     if(activeKey<=4) {
       this.setState({
         extends:'',
@@ -757,7 +767,8 @@ class Selector extends React.Component {
     })
     if(activeKey === '1'){
       const url = `${this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=`
-    requestGet(url)
+      const fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+    requestFetch(fetchContent)
       .then(response => {
         if (response.status === 1 && response.data !== null) {
           const { selectedUserData } = this.state
@@ -782,9 +793,11 @@ class Selector extends React.Component {
     }
     if (activeKey === '2') {
       const url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=`
+      const fetchContent = {url, ...(roleSearchContent?.(url) || {})};
+
       // let { roleShowList } = this.state
       // if (!roleShowList.length) {
-        requestGet(url)
+        requestFetch(fetchContent)
           .then(response => {
             if (response.status === 1 ) {
               const { selectedOtherList } = this.state
@@ -810,7 +823,7 @@ class Selector extends React.Component {
     } else if (activeKey === '3') {
       let { selectedOtherList } = this.state
       const url = `${_this.state.prefixUrl}/user/org/list?pageSize=40&pageNo=1&orgIds=`
-      requestGet(url)
+      requestFetch({url})
         .then(response => {
           if (response.status === 1) {
             this.setState({
@@ -844,7 +857,7 @@ class Selector extends React.Component {
         })
       } else {
         const url = `${_this.state.prefixUrl}/user/rules?documentNo=${this.props.documentNo}&documentName=${this.props.documentName}`
-        requestGet(url)
+        requestFetch({url})
           .then(response => {
             if (response.status === 1) {
               const menuList = [
@@ -865,7 +878,7 @@ class Selector extends React.Component {
       }
     } if(activeKey === '0'){
       const url = `${_this.state.prefixUrl}/user/wechat/accounts`
-       requestGet(url).then(res=>{
+       requestFetch({url}).then(res=>{
          const id = res.data&&res.data[0]?res.data[0].accountId:''
          this.setState({
            weListDB:res.data,
@@ -883,7 +896,7 @@ class Selector extends React.Component {
   // 搜索微信
   weGetData = (id,keyWords='')=>{
     const url = `${this.state.prefixUrl}/user/wechat/users?accountId=${id}&keyWords=${keyWords}`
-    requestGet(url).then(res=>{
+    requestFetch({url}).then(res=>{
       // console.log(res)
       let _newList = resetChecked(res.data, 'wxOpenId')
       let list = setChecked(_newList, this.state.selectedOtherList, 'wxOpenId')
@@ -911,7 +924,7 @@ class Selector extends React.Component {
     const _info = `[${info}]`
     // console.log(_info)
     let url = `${this.state.prefixUrl}/user/org/user?pageSize=40&pageNo=1&orgIds=${_info}`
-    requestGet(url)
+    requestFetch({url})
       .then(response => {
         if (response.status === 1) {
           let _newList = resetChecked(response.data, 'userid')
@@ -978,9 +991,12 @@ class Selector extends React.Component {
   // 角色分页
   roleSelect = e => {
     const _this = this
+    const {roleSearchContent} = this.props
     let url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=`
+    const fetchContent = {url, ...(roleSearchContent?.(url) || {})};
+
     let { selectedOtherList } = this.state
-    requestGet(url)
+    requestFetch(fetchContent)
       .then(response => {
         if (response.status === 1 && response.data !== null) {
           let obj = {
@@ -1003,8 +1019,11 @@ class Selector extends React.Component {
   // 用户分页
   staffSelect = e => {
     const _this = this
+    const {staffSearchContent} = this.props
     let url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=`
-    requestGet(url)
+    const fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+
+    requestFetch(fetchContent)
       .then(response => {
         // console.log(response)
         if (response.status === 1 && response.data !== null) {

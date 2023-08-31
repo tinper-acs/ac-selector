@@ -63,6 +63,25 @@ var selectedUserCol = {
     title: 'Receiving Object',
     dataIndex: 'reciving',
     width: 250
+  }],
+  id_ID: [{
+    key: 'serialNumber',
+    title: 'Nomor seri',
+    dataIndex: 'number',
+    width: 100,
+    render: function render(text, record, index) {
+      return /*#__PURE__*/_react["default"].createElement("span", null, index + 1);
+    }
+  }, {
+    key: 'type',
+    title: 'jenis',
+    dataIndex: 'type',
+    width: 100
+  }, {
+    key: 'recivingObj',
+    title: 'Objek yang diterima',
+    dataIndex: 'reciving',
+    width: 250
   }]
 };
 exports.selectedUserCol = selectedUserCol;
@@ -95,6 +114,16 @@ var roleMultiCol = {
   }, {
     key: 'rolecode',
     title: 'Role Code',
+    dataIndex: 'roleCode'
+  }],
+  id_ID: [{
+    key: 'rolename',
+    title: 'Nama peran',
+    dataIndex: 'roleName',
+    width: 100
+  }, {
+    key: 'rolecode',
+    title: 'Kode peran',
     dataIndex: 'roleCode'
   }]
 };
@@ -158,6 +187,23 @@ var wechatMultiCol = {
     key: 'email',
     title: 'Email',
     dataIndex: 'email'
+  }],
+  id_ID: [{
+    key: 'username',
+    title: 'nama',
+    dataIndex: 'username'
+  }, {
+    key: 'weChatId',
+    title: 'Sinyal mikro',
+    dataIndex: 'weChatId'
+  }, {
+    key: 'phone',
+    title: 'Nomor ponsel',
+    dataIndex: 'phone'
+  }, {
+    key: 'email',
+    title: 'Kotak surat',
+    dataIndex: 'email'
   }]
 };
 exports.wechatMultiCol = wechatMultiCol;
@@ -207,6 +253,22 @@ var orgCol = {
   }, {
     key: 'orgPhone',
     title: 'Cellphone Number',
+    dataIndex: 'mobile',
+    width: 131
+  }],
+  id_ID: [{
+    key: 'orgName',
+    title: 'nama',
+    dataIndex: 'username',
+    width: 150
+  }, {
+    key: 'orgMail',
+    title: 'Nomor rekening (kotak surat)',
+    dataIndex: 'email',
+    width: 150
+  }, {
+    key: 'orgPhone',
+    title: 'ponsel',
     dataIndex: 'mobile',
     width: 131
   }]
@@ -280,6 +342,27 @@ var multiColumns = {
   }, {
     key: 'phone',
     title: 'Cellphone Number',
+    dataIndex: 'mobile',
+    width: 150
+  }],
+  id_ID: [{
+    key: 'name',
+    title: 'nama',
+    dataIndex: 'username',
+    width: 100
+  }, {
+    key: 'orgName',
+    title: 'departemen',
+    dataIndex: 'orgName',
+    width: 200
+  }, {
+    key: 'account',
+    title: 'Nomor rekening (kotak surat)',
+    dataIndex: 'email',
+    width: 200
+  }, {
+    key: 'phone',
+    title: 'Nomor ponsel',
     dataIndex: 'mobile',
     width: 150
   }]
@@ -381,7 +464,7 @@ var pageLocale = {
     'items': 'Items',
     'show': 'page',
     'goto': 'goto',
-    'page': '',
+    'page': 'Page',
     'ok': 'ok'
   },
   zh_TW: {
@@ -390,8 +473,17 @@ var pageLocale = {
     'items': '條',
     'show': 'page',
     'goto': 'goto',
-    'page': '',
+    'page': '頁',
     'ok': 'ok'
+  },
+  id_ID: {
+    'lang': 'id_ID',
+    'total': 'Total',
+    'items': 'item',
+    'show': 'Tampilkan',
+    'goto': 'Pergi ke',
+    'page': 'Halaman',
+    'ok': 'Baik'
   }
 };
 exports.pageLocale = pageLocale;
