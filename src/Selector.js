@@ -288,6 +288,7 @@ class Selector extends React.Component {
     let url
     const { activeKey, staffInputValue, roleInputValue } = this.state
     const {staffSearchContent, roleSearchContent} = this.props
+    let fetchContent
     if (activeKey === '1') {
       url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${staffInputValue}`
       fetchContent = {url, ...(staffSearchContent?.(url, {pageSize: this.props.pageSize, keyword: staffInputValue}) || {})};
@@ -751,7 +752,7 @@ class Selector extends React.Component {
   onChange = (activeKey,node) => {
     // console.log(activeKey,node)
     const _this = this
-    const {staffSearchContent, roleSearchContent} = this.props
+    const {staffSearchContent, roleSearchContent, orgSearchContent} = this.props
     if(activeKey<=4) {
       this.setState({
         extends:'',
@@ -823,7 +824,8 @@ class Selector extends React.Component {
     } else if (activeKey === '3') {
       let { selectedOtherList } = this.state
       const url = `${_this.state.prefixUrl}/user/org/list?pageSize=40&pageNo=1&orgIds=`
-      requestFetch({url})
+      const fetchContent = {url, ...(orgSearchContent?.(url, {pageSize: 40}) || {})};
+      requestFetch(fetchContent)
         .then(response => {
           if (response.status === 1) {
             this.setState({
@@ -857,7 +859,8 @@ class Selector extends React.Component {
         })
       } else {
         const url = `${_this.state.prefixUrl}/user/rules?documentNo=${this.props.documentNo}&documentName=${this.props.documentName}`
-        requestFetch({url})
+        const fetchContent = {url, ...(ruleSearchContent?.(url, {documentNo: this.props.documentNo, documentName: this.props.documentName}) || {})};
+        requestFetch(fetchContent)
           .then(response => {
             if (response.status === 1) {
               const menuList = [
@@ -896,7 +899,9 @@ class Selector extends React.Component {
   // 搜索微信
   weGetData = (id,keyWords='')=>{
     const url = `${this.state.prefixUrl}/user/wechat/users?accountId=${id}&keyWords=${keyWords}`
-    requestFetch({url}).then(res=>{
+    const fetchContent = {url, ...(wechatUsersSearchContent?.(url, {accountId: id, keyWords: keyWords}) || {})};
+
+    requestFetch(fetchContent).then(res=>{
       // console.log(res)
       let _newList = resetChecked(res.data, 'wxOpenId')
       let list = setChecked(_newList, this.state.selectedOtherList, 'wxOpenId')
@@ -922,9 +927,9 @@ class Selector extends React.Component {
   // tree select
   treeOnSelect = info => {
     const _info = `[${info}]`
-    // console.log(_info)
     let url = `${this.state.prefixUrl}/user/org/user?pageSize=40&pageNo=1&orgIds=${_info}`
-    requestFetch({url})
+    const fetchContent = {url, ...(orgUsersSearchContent?.(url, {orgIds: _info, pageSize: 40, pageNo: 1}) || {})};
+    requestFetch(fetchContent)
       .then(response => {
         if (response.status === 1) {
           let _newList = resetChecked(response.data, 'userid')
