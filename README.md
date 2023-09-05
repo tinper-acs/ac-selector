@@ -1,3 +1,4 @@
+
 # ac-selector
 
 [![Build Status](https://travis-ci.org/GRAMMAC1/ac-selector.svg?branch=master)](https://travis-ci.org/GRAMMAC1/ac-selector)
@@ -42,6 +43,8 @@
 |`treeConfig`|传入的树（字段在下面示例代码）|`array` | 否 |[]|无|
 |`pageTotal`|分页，总共条数|`number` | 否 |无|无|
 |`pageItems`|分页，总页数|`number` | 否 |无|无|
+|`staffSearchContent`|自定义 staffSearch 接口内容、类型 (addres, {pageSize, pageNo, keyword})=>（{url: 'www.baidu.com/sdf/sdf',option: {method: 'POST', body: JSON.stringify({a:1, b:2}),// ...}}））|`number` | 否 |无|无|
+|`roleSearchContent`|自定义 roleSearch 接口内容、类型 ，功能类似staffSearchContent|`number` | 否 |无|无|
 
 ### 关于扩展的详细可参考 demo2 
 >

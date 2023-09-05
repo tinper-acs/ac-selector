@@ -171,7 +171,7 @@ class Selector extends React.Component {
       selectedOtherList: setOtherReciving(selectedOther)
     })
     const url = `${this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=`
-    const fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+    const fetchContent = {url, ...(staffSearchContent?.(url, {pageSize: this.props.pageSize,}) || {})};
     requestFetch(fetchContent)
       .then(response => {
         if (response.status === 1 && response.data !== null) {
@@ -204,11 +204,11 @@ class Selector extends React.Component {
     let fetchContent
     if (activeKey === '1') {
       url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${e.target.value}`
-      fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+      fetchContent = {url, ...(staffSearchContent?.(url, {pageSize: this.props.pageSize, keyword: e.target.value}) || {})};
 
     } else if (activeKey === '2') {
       url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${e.target.value}`
-      fetchContent = {url, ...(roleSearchContent?.(url) || {})};
+      fetchContent = {url, ...(roleSearchContent?.(url, {pageSize: this.props.pageSize, keyword: e.target.value}) || {})};
     }
     if (e.keyCode === 13 || e.keyCode === 108) {
       requestFetch(fetchContent)
@@ -290,10 +290,10 @@ class Selector extends React.Component {
     const {staffSearchContent, roleSearchContent} = this.props
     if (activeKey === '1') {
       url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${staffInputValue}`
-      fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+      fetchContent = {url, ...(staffSearchContent?.(url, {pageSize: this.props.pageSize, keyword: staffInputValue}) || {})};
     } else {
       url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=${roleInputValue}`
-      fetchContent = {url, ...(roleSearchContent?.(url) || {})};
+      fetchContent = {url, ...(roleSearchContent?.(url, {pageSize: this.props.pageSize, keyword: roleInputValue}) || {})};
     }
     requestFetch(fetchContent)
       .then(response => {
@@ -767,7 +767,7 @@ class Selector extends React.Component {
     })
     if(activeKey === '1'){
       const url = `${this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=`
-      const fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+      const fetchContent = {url, ...(staffSearchContent?.(url, {pageSize: this.props.pageSize}) || {})};
     requestFetch(fetchContent)
       .then(response => {
         if (response.status === 1 && response.data !== null) {
@@ -793,7 +793,7 @@ class Selector extends React.Component {
     }
     if (activeKey === '2') {
       const url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=1&keyword=`
-      const fetchContent = {url, ...(roleSearchContent?.(url) || {})};
+      const fetchContent = {url, ...(roleSearchContent?.(url, {pageSize: this.props.pageSize}) || {})};
 
       // let { roleShowList } = this.state
       // if (!roleShowList.length) {
@@ -993,7 +993,7 @@ class Selector extends React.Component {
     const _this = this
     const {roleSearchContent} = this.props
     let url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=`
-    const fetchContent = {url, ...(roleSearchContent?.(url) || {})};
+    const fetchContent = {url, ...(roleSearchContent?.(url, {pageSize: this.props.pageSize, pageNo: e}) || {})};
 
     let { selectedOtherList } = this.state
     requestFetch(fetchContent)
@@ -1021,7 +1021,7 @@ class Selector extends React.Component {
     const _this = this
     const {staffSearchContent} = this.props
     let url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=`
-    const fetchContent = {url, ...(staffSearchContent?.(url) || {})};
+    const fetchContent = {url, ...(staffSearchContent?.(url, {pageSize: this.props.pageSize, pageNo: e}) || {})};
 
     requestFetch(fetchContent)
       .then(response => {

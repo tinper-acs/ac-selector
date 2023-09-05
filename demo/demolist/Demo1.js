@@ -55,7 +55,7 @@ return (
     ruleList={[{name:'1',id:'2',a:'d'}]}
     isWechat={true}
     pageSize={3}
-    staffSearchContent={()=>{
+    staffSearchContent={(addres, {pageSize, pageNo, keyword})=>{
       return {
         url: 'www.baidu.com/sdf/sdf',
         option: {
@@ -65,7 +65,7 @@ return (
         }
       }
     }}
-    roleSearchContent={()=>{
+    roleSearchContent={(addres, {pageSize, pageNo, keyword})=>{
       return {
         url: 'www.yonyou.com/sdf/sd3f',
         option: {
