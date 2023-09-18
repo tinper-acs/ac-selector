@@ -12,7 +12,7 @@ import {
   Pagination,
   Menu
 } from './components/tinper'
-import '../Selector.css'
+import './Selector.css'
 
 const {multiSelect} = Table
 import { selectedUserCol, roleMultiCol, orgCol, multiColumns,pageLocale, wechatMultiCol } from './colmuns'
@@ -404,6 +404,7 @@ class Selector extends React.Component {
     })
     selectedUserData.splice(this.delIndex, 1)
     this.setState({
+      multiShowList: multiShowList,
       selectedUserData: [...selectedUserData],
       selectedCount: selectedUserData.length
     })
@@ -752,12 +753,12 @@ class Selector extends React.Component {
   onChange = (activeKey,node) => {
     // console.log(activeKey,node)
     const _this = this
-    const {staffSearchContent, roleSearchContent, orgSearchContent} = this.props
+    const {staffSearchContent, roleSearchContent, orgSearchContent, ruleSearchContent} = this.props
     if(activeKey<=4) {
       this.setState({
         extends:'',
         activeKey,
-        defaultLabel: setLabel(activeKey)
+        defaultLabel: setLabel(activeKey, this.props.locale)
       })
     }
     this.setState({
@@ -898,6 +899,7 @@ class Selector extends React.Component {
 
   // 搜索微信
   weGetData = (id,keyWords='')=>{
+    const {wechatUsersSearchContent} = this.props
     const url = `${this.state.prefixUrl}/user/wechat/users?accountId=${id}&keyWords=${keyWords}`
     const fetchContent = {url, ...(wechatUsersSearchContent?.(url, {accountId: id, keyWords: keyWords}) || {})};
 
@@ -926,6 +928,7 @@ class Selector extends React.Component {
 
   // tree select
   treeOnSelect = info => {
+    const {orgUsersSearchContent} = this.props
     const _info = `[${info}]`
     let url = `${this.state.prefixUrl}/user/org/user?pageSize=40&pageNo=1&orgIds=${_info}`
     const fetchContent = {url, ...(orgUsersSearchContent?.(url, {orgIds: _info, pageSize: 40, pageNo: 1}) || {})};
@@ -1326,11 +1329,11 @@ class Selector extends React.Component {
                       placeholder={i18n[locale].pleaseOrg}
                       className={'rc-s-search'}
                     />
-                    <Icon
+                    {/* <Icon
                       onClick={_this.clickSearch}
                       className={'searchIcon'}
                       type="uf-search"
-                    />
+                    /> */}
                   </div>
                   <div className={'clearfix'}>
                     <div className={'myTree'}>

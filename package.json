@@ -1,6 +1,6 @@
 {
  "name": "ac-selector",
- "version": "3.0.9",
+ "version": "3.0.12",
  "description": "选人组件",
  "keywords": [
   "react",
@@ -28,7 +28,7 @@
  ],
  "scripts": {
   "dev": "webpack-dev-server --config ./config/webpack.dev.js",
-  "build": "rm -rf build && lessc ./src/Selector.less ./build/Selector.css && babel src -d build",
+  "build": "rimraf build && lessc ./src/Selector.less ./build/Selector.css && babel src -d build",
   "compiler": "babel src -d build"
  },
  "dependencies": {
@@ -73,8 +73,8 @@
   "webpack-merge": "^4.2.2"
  },
  "peerDependencies": {
+  "prop-types": "*",
   "react": "*",
-  "react-dom": "*",
-  "prop-types": "*"
+  "react-dom": "*"
  }
 }

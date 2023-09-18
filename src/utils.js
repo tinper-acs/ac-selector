@@ -86,18 +86,18 @@ export const setOtherReciving = source => {
 }
 
 // 根据activeKey设置不同的标签
-export function setLabel (key) {
+export function setLabel (key, local) {
   switch (key) {
     case '1':
-      return '用户'
+      return i18n[local].user
     case '2': 
-      return '角色'
+      return i18n[local].role
     case '3':
-      return '组织'
+      return i18n[local].org
     case '4':
-      return '规则'
+      return i18n[local].rule
     case '0':
-      return '微信'
+      return i18n[local].wechat
   }
 }
 
