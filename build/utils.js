@@ -57,7 +57,7 @@ function setChecked(source, ref, type) {
   return res;
 }
 // 非正式环境数据不全,补全用户列表为空的问题
-var addFullAttr = function addFullAttr() {
+var addFullAttr = exports.addFullAttr = function addFullAttr() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var local = arguments.length > 1 ? arguments[1] : undefined;
   // console.log(i18n[local])
@@ -81,8 +81,7 @@ var addFullAttr = function addFullAttr() {
 };
 
 // 为传进来的数据设置key和reciving,可以在右侧展示
-exports.addFullAttr = addFullAttr;
-var setUserReciving = function setUserReciving(source) {
+var setUserReciving = exports.setUserReciving = function setUserReciving(source) {
   var res = source.map(function (t) {
     return Object.assign({}, t, {
       key: t.userid,
@@ -91,8 +90,7 @@ var setUserReciving = function setUserReciving(source) {
   });
   return res;
 };
-exports.setUserReciving = setUserReciving;
-var setOtherReciving = function setOtherReciving(source) {
+var setOtherReciving = exports.setOtherReciving = function setOtherReciving(source) {
   var res = source.map(function (t) {
     switch (t.typeCode) {
       case 1:
@@ -118,26 +116,24 @@ var setOtherReciving = function setOtherReciving(source) {
 };
 
 // 根据activeKey设置不同的标签
-exports.setOtherReciving = setOtherReciving;
-function setLabel(key) {
+function setLabel(key, local) {
   switch (key) {
     case '1':
-      return '用户';
+      return i18n[local].user;
     case '2':
-      return '角色';
+      return i18n[local].role;
     case '3':
-      return '组织';
+      return i18n[local].org;
     case '4':
-      return '规则';
+      return i18n[local].rule;
     case '0':
-      return '微信';
+      return i18n[local].wechat;
   }
 }
-var multiSelectType = {
+var multiSelectType = exports.multiSelectType = {
   type: 'checkbox'
 };
-exports.multiSelectType = multiSelectType;
-var transferToMenu = function transferToMenu(treeData) {
+var transferToMenu = exports.transferToMenu = function transferToMenu(treeData) {
   var subMenu = [],
     arr = [];
   if (!(treeData instanceof Array)) {
@@ -167,8 +163,7 @@ var transferToMenu = function transferToMenu(treeData) {
   });
   return subMenu;
 };
-exports.transferToMenu = transferToMenu;
-var mapUserList = function mapUserList() {
+var mapUserList = exports.mapUserList = function mapUserList() {
   var userList = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var res = [];
   res = userList.map(function (t) {
@@ -184,8 +179,7 @@ var mapUserList = function mapUserList() {
   });
   return res;
 };
-exports.mapUserList = mapUserList;
-var mapOtherList = function mapOtherList() {
+var mapOtherList = exports.mapOtherList = function mapOtherList() {
   var otherList = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var res = [];
   res = otherList.map(function (t) {
@@ -225,8 +219,7 @@ var mapOtherList = function mapOtherList() {
  * @param data 数据源
  * @param typeCode 清除类型
  */
-exports.mapOtherList = mapOtherList;
-var deSelect = function deSelect() {
+var deSelect = exports.deSelect = function deSelect() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var typeCode = arguments.length > 1 ? arguments[1] : undefined;
   var res = [];
@@ -237,8 +230,7 @@ var deSelect = function deSelect() {
   });
   return res;
 };
-exports.deSelect = deSelect;
-var deSelectType = function deSelectType() {
+var deSelectType = exports.deSelectType = function deSelectType() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var type = arguments.length > 1 ? arguments[1] : undefined;
   var res = [];
@@ -249,40 +241,35 @@ var deSelectType = function deSelectType() {
   });
   return res;
 };
-exports.deSelectType = deSelectType;
-var getUserId = function getUserId() {
+var getUserId = exports.getUserId = function getUserId() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var res = data.map(function (t) {
     return t.userid;
   });
   return res;
 };
-exports.getUserId = getUserId;
-var getRoleId = function getRoleId() {
+var getRoleId = exports.getRoleId = function getRoleId() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var res = data.map(function (t) {
     return t.roleId;
   });
   return res;
 };
-exports.getRoleId = getRoleId;
-var getWeId = function getWeId() {
+var getWeId = exports.getWeId = function getWeId() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var res = data.map(function (t) {
     return t.wxOpenId;
   });
   return res;
 };
-exports.getWeId = getWeId;
-var getKeyId = function getKeyId() {
+var getKeyId = exports.getKeyId = function getKeyId() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var res = data.map(function (t) {
     return t.key;
   });
   return res;
 };
-exports.getKeyId = getKeyId;
-var getTreeItem = function getTreeItem(data) {
+var getTreeItem = exports.getTreeItem = function getTreeItem(data) {
   var arr = [];
   data.forEach(function (item) {});
   return;
@@ -293,8 +280,7 @@ var getTreeItem = function getTreeItem(data) {
 // id=1&name=2的形式
 // 对key进行解析，返回
 // { id: 1, name: 2 }
-exports.getTreeItem = getTreeItem;
-var decodeMenukey = function decodeMenukey() {
+var decodeMenukey = exports.decodeMenukey = function decodeMenukey() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var paramList = value.split('&'),
     tempArr,
@@ -305,4 +291,3 @@ var decodeMenukey = function decodeMenukey() {
   });
   return res;
 };
-exports.decodeMenukey = decodeMenukey;

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.wechatMultiCol = exports.selectedUserCol = exports.selectedUser = exports.selectData = exports.roleMultiCol = exports.pageLocale = exports.orgCol = exports.multiColumns = exports.filterCaptial = void 0;
 var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var selectedUserCol = {
+var selectedUserCol = exports.selectedUserCol = {
   zh_CN: [{
     key: 'serialNumber',
     title: '序号',
@@ -84,8 +84,7 @@ var selectedUserCol = {
     width: 250
   }]
 };
-exports.selectedUserCol = selectedUserCol;
-var roleMultiCol = {
+var roleMultiCol = exports.roleMultiCol = {
   zh_CN: [{
     key: 'rolename',
     title: '角色名',
@@ -135,8 +134,7 @@ wxAccountId: "gh_26b301786a30"
 wxOpenId: "oQzPCwf9c64gKKHzo8y2lxR5C5fs"
 weChatId: "wugqm"
 */
-exports.roleMultiCol = roleMultiCol;
-var wechatMultiCol = {
+var wechatMultiCol = exports.wechatMultiCol = {
   zh_CN: [{
     key: 'username',
     title: '姓名',
@@ -206,8 +204,7 @@ var wechatMultiCol = {
     dataIndex: 'email'
   }]
 };
-exports.wechatMultiCol = wechatMultiCol;
-var orgCol = {
+var orgCol = exports.orgCol = {
   zh_CN: [{
     key: 'orgName',
     title: '姓名',
@@ -280,8 +277,7 @@ var orgCol = {
 //   { key: 'account', title: '账号(邮箱)', dataIndex: 'email', width: 200 },
 //   { key: 'phone', title: '手机号码', dataIndex: 'mobile', width: 150 }
 // ]
-exports.orgCol = orgCol;
-var multiColumns = {
+var multiColumns = exports.multiColumns = {
   zh_CN: [{
     key: 'name',
     title: '姓名',
@@ -367,10 +363,8 @@ var multiColumns = {
     width: 150
   }]
 };
-exports.multiColumns = multiColumns;
-var filterCaptial = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-exports.filterCaptial = filterCaptial;
-var selectData = [{
+var filterCaptial = exports.filterCaptial = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+var selectData = exports.selectData = [{
   orgId: '1249795575075072',
   orgName: 'zbl公司222',
   type: '组织',
@@ -406,9 +400,9 @@ var selectData = [{
 // 	typeCode: 3
 // }
 ];
-exports.selectData = selectData;
-var selectedUser = [{
-  orgName: '未知部门',
+
+var selectedUser = exports.selectedUser = [{
+  orgName: '',
   email: 'zhaojian770627@163.com',
   username: 'zhaojianc',
   mobile: '18601913836',
@@ -416,7 +410,7 @@ var selectedUser = [{
   userid: 'a1e8075a-93c3-4552-9a06-e05128ee34b7',
   typeCode: 0
 }, {
-  orgName: '未知部门',
+  orgName: '',
   email: 'zongtf3@yonyou.com',
   username: '18610018262',
   mobile: '18610018262',
@@ -424,7 +418,7 @@ var selectedUser = [{
   userid: '1b1123f0-5d62-41fe-b619-15922397f917',
   typeCode: 0
 }, {
-  orgName: '未知部门',
+  orgName: '',
   email: 'YHT-105-5841559369734972@yht.com',
   username: 'aaa',
   mobile: '15810624300',
@@ -456,8 +450,7 @@ var selectedUser = [{
   userid: '58cd6055-f8c0-4d51-a9d9-a733e4ef1872',
   typeCode: 0
 }];
-exports.selectedUser = selectedUser;
-var pageLocale = {
+var pageLocale = exports.pageLocale = {
   en_US: {
     'lang': 'en',
     'total': 'Total',
@@ -471,10 +464,10 @@ var pageLocale = {
     'lang': 'zh_TW',
     'total': '共',
     'items': '條',
-    'show': 'page',
-    'goto': 'goto',
+    'show': '顯示',
+    'goto': '跳至',
     'page': '頁',
-    'ok': 'ok'
+    'ok': '確定'
   },
   id_ID: {
     'lang': 'id_ID',
@@ -486,4 +479,3 @@ var pageLocale = {
     'ok': 'Baik'
   }
 };
-exports.pageLocale = pageLocale;

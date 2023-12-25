@@ -8,7 +8,7 @@ var _react = _interopRequireDefault(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var langs = _interopRequireWildcard(require("./lang"));
 var _tinper = require("./components/tinper");
-require("../Selector.css");
+require("./Selector.css");
 var _colmuns = require("./colmuns");
 var _request = require("./request");
 var _utils = require("./utils");
@@ -37,8 +37,11 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var multiSelect = _tinper.Table.multiSelect;
+var multiSelect = _tinper.Table.multiSelect,
+  dragColumn = _tinper.Table.dragColumn;
 var MultiSelectTable = multiSelect(_tinper.Table, _tinper.Checkbox);
+var DragColumnTable = dragColumn(MultiSelectTable);
+var DragColumnRoleTable = dragColumn(_tinper.Table);
 var TabPane = _tinper.Tabs.TabPane;
 var TreeNode = _tinper.Tree.TreeNode;
 var i18n = _objectSpread({}, langs);
@@ -81,7 +84,8 @@ var defaultProps = {
   treeConfig: [],
   pageSize: 40,
   isRule: true,
-  isOrg: true
+  isOrg: true,
+  isDragTable: false
 };
 var Selector = /*#__PURE__*/function (_React$Component) {
   _inherits(Selector, _React$Component);
@@ -103,7 +107,9 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       var url = "".concat(_this2.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=");
       var fetchContent = _objectSpread({
         url: url
-      }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
+      }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url, {
+        pageSize: _this2.props.pageSize
+      })) || {});
       (0, _request.requestFetch)(fetchContent).then(function (response) {
         if (response.status === 1 && response.data !== null) {
           var selectedUserData = _this2.state.selectedUserData;
@@ -138,12 +144,18 @@ var Selector = /*#__PURE__*/function (_React$Component) {
         url = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(e.target.value);
         fetchContent = _objectSpread({
           url: url
-        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
+        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url, {
+          pageSize: _this2.props.pageSize,
+          keyword: e.target.value
+        })) || {});
       } else if (activeKey === '2') {
         url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(e.target.value);
         fetchContent = _objectSpread({
           url: url
-        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url)) || {});
+        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url, {
+          pageSize: _this2.props.pageSize,
+          keyword: e.target.value
+        })) || {});
       }
       if (e.keyCode === 13 || e.keyCode === 108) {
         (0, _request.requestFetch)(fetchContent).then(function (response) {
@@ -212,16 +224,23 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       var _this2$props3 = _this2.props,
         staffSearchContent = _this2$props3.staffSearchContent,
         roleSearchContent = _this2$props3.roleSearchContent;
+      var fetchContent;
       if (activeKey === '1') {
         url = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(staffInputValue);
         fetchContent = _objectSpread({
           url: url
-        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
+        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url, {
+          pageSize: _this2.props.pageSize,
+          keyword: staffInputValue
+        })) || {});
       } else {
         url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=").concat(roleInputValue);
         fetchContent = _objectSpread({
           url: url
-        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url)) || {});
+        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url, {
+          pageSize: _this2.props.pageSize,
+          keyword: roleInputValue
+        })) || {});
       }
       (0, _request.requestFetch)(fetchContent).then(function (response) {
         if (response.status === 1 && response.data !== null) {
@@ -319,14 +338,17 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       var _this2$state3 = _this2.state,
         multiShowList = _this2$state3.multiShowList,
         selectedUserData = _this2$state3.selectedUserData;
-      multiShowList = multiShowList.map(function (item) {
+      var _list = _toConsumableArray(multiShowList);
+      _list = _list.map(function (item) {
         if (item.userid === selectedUserData[_this2.delIndex].userid) {
           item._checked = false;
           return item;
         }
+        return item;
       });
       selectedUserData.splice(_this2.delIndex, 1);
       _this2.setState({
+        multiShowList: _toConsumableArray(_list),
         selectedUserData: _toConsumableArray(selectedUserData),
         selectedCount: selectedUserData.length
       });
@@ -378,7 +400,8 @@ var Selector = /*#__PURE__*/function (_React$Component) {
           typeCode: typeCode,
           key: record.userid,
           reciving: record.orgName ? "".concat(record.username, "(").concat(record.orgName, ")") : // : `${record.username}(未知部门)`
-          "".concat(record.username, "(").concat(langs[_this2.state.locale], ")")
+          // `${record.username}(${langs[this.state.locale]})`
+          "".concat(record.username)
         });
         if (delList.includes(currItem.userid)) {
           _list.push(currItem);
@@ -680,27 +703,33 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       var _this = _assertThisInitialized(_this2);
       var _this2$props4 = _this2.props,
         staffSearchContent = _this2$props4.staffSearchContent,
-        roleSearchContent = _this2$props4.roleSearchContent;
+        roleSearchContent = _this2$props4.roleSearchContent,
+        orgSearchContent = _this2$props4.orgSearchContent,
+        ruleSearchContent = _this2$props4.ruleSearchContent;
       if (activeKey <= 4) {
         _this2.setState({
           "extends": '',
           activeKey: activeKey,
-          defaultLabel: (0, _utils.setLabel)(activeKey)
+          defaultLabel: (0, _utils.setLabel)(activeKey, _this2.props.locale)
         });
       }
       _this2.setState({
         "extends": '',
         activeKey: activeKey,
-        orgInputValue: ""
+        orgInputValue: "",
+        staffInputValue: '',
+        roleInputValue: ''
         // defaultLabel: setLabel(activeKey)
       });
 
       if (activeKey === '1') {
         var url = "".concat(_this2.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=");
-        var _fetchContent = _objectSpread({
+        var fetchContent = _objectSpread({
           url: url
-        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
-        (0, _request.requestFetch)(_fetchContent).then(function (response) {
+        }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url, {
+          pageSize: _this2.props.pageSize
+        })) || {});
+        (0, _request.requestFetch)(fetchContent).then(function (response) {
           if (response.status === 1 && response.data !== null) {
             var selectedUserData = _this2.state.selectedUserData;
             var _newList = (0, _utils.resetChecked)(response.data.values, 'userid');
@@ -723,13 +752,15 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       }
       if (activeKey === '2') {
         var _url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=1&keyword=");
-        var _fetchContent2 = _objectSpread({
+        var _fetchContent = _objectSpread({
           url: _url
-        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(_url)) || {});
+        }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(_url, {
+          pageSize: _this2.props.pageSize
+        })) || {});
 
         // let { roleShowList } = this.state
         // if (!roleShowList.length) {
-        (0, _request.requestFetch)(_fetchContent2).then(function (response) {
+        (0, _request.requestFetch)(_fetchContent).then(function (response) {
           if (response.status === 1) {
             var selectedOtherList = _this2.state.selectedOtherList;
             var _page = {
@@ -753,9 +784,12 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       } else if (activeKey === '3') {
         var selectedOtherList = _this2.state.selectedOtherList;
         var _url2 = "".concat(_this.state.prefixUrl, "/user/org/list?pageSize=40&pageNo=1&orgIds=");
-        (0, _request.requestFetch)({
+        var _fetchContent2 = _objectSpread({
           url: _url2
-        }).then(function (response) {
+        }, (orgSearchContent === null || orgSearchContent === void 0 ? void 0 : orgSearchContent(_url2, {
+          pageSize: 40
+        })) || {});
+        (0, _request.requestFetch)(_fetchContent2).then(function (response) {
           if (response.status === 1) {
             _this2.setState({
               orgTreeList: response.data
@@ -787,9 +821,13 @@ var Selector = /*#__PURE__*/function (_React$Component) {
           });
         } else {
           var _url3 = "".concat(_this.state.prefixUrl, "/user/rules?documentNo=").concat(_this2.props.documentNo, "&documentName=").concat(_this2.props.documentName);
-          (0, _request.requestFetch)({
+          var _fetchContent3 = _objectSpread({
             url: _url3
-          }).then(function (response) {
+          }, (ruleSearchContent === null || ruleSearchContent === void 0 ? void 0 : ruleSearchContent(_url3, {
+            documentNo: _this2.props.documentNo,
+            documentName: _this2.props.documentName
+          })) || {});
+          (0, _request.requestFetch)(_fetchContent3).then(function (response) {
             if (response.status === 1) {
               var menuList = [{
                 id: 'root-0',
@@ -825,10 +863,15 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     // 搜索微信
     _defineProperty(_assertThisInitialized(_this2), "weGetData", function (id) {
       var keyWords = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var wechatUsersSearchContent = _this2.props.wechatUsersSearchContent;
       var url = "".concat(_this2.state.prefixUrl, "/user/wechat/users?accountId=").concat(id, "&keyWords=").concat(keyWords);
-      (0, _request.requestFetch)({
+      var fetchContent = _objectSpread({
         url: url
-      }).then(function (res) {
+      }, (wechatUsersSearchContent === null || wechatUsersSearchContent === void 0 ? void 0 : wechatUsersSearchContent(url, {
+        accountId: id,
+        keyWords: keyWords
+      })) || {});
+      (0, _request.requestFetch)(fetchContent).then(function (res) {
         // console.log(res)
         var _newList = (0, _utils.resetChecked)(res.data, 'wxOpenId');
         var list = (0, _utils.setChecked)(_newList, _this2.state.selectedOtherList, 'wxOpenId');
@@ -851,12 +894,17 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     });
     // tree select
     _defineProperty(_assertThisInitialized(_this2), "treeOnSelect", function (info) {
+      var orgUsersSearchContent = _this2.props.orgUsersSearchContent;
       var _info = "[".concat(info, "]");
-      // console.log(_info)
       var url = "".concat(_this2.state.prefixUrl, "/user/org/user?pageSize=40&pageNo=1&orgIds=").concat(_info);
-      (0, _request.requestFetch)({
+      var fetchContent = _objectSpread({
         url: url
-      }).then(function (response) {
+      }, (orgUsersSearchContent === null || orgUsersSearchContent === void 0 ? void 0 : orgUsersSearchContent(url, {
+        orgIds: _info,
+        pageSize: 40,
+        pageNo: 1
+      })) || {});
+      (0, _request.requestFetch)(fetchContent).then(function (response) {
         if (response.status === 1) {
           var _newList = (0, _utils.resetChecked)(response.data, 'userid');
           _this2.setState({
@@ -925,10 +973,14 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this2), "roleSelect", function (e) {
       var _this = _assertThisInitialized(_this2);
       var roleSearchContent = _this2.props.roleSearchContent;
-      var url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=").concat(e, "&keyword=");
+      var roleInputValue = _this2.state.roleInputValue;
+      var url = "".concat(_this.state.prefixUrl, "/user/role/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=").concat(e, "&keyword=").concat(roleInputValue);
       var fetchContent = _objectSpread({
         url: url
-      }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url)) || {});
+      }, (roleSearchContent === null || roleSearchContent === void 0 ? void 0 : roleSearchContent(url, {
+        pageSize: _this2.props.pageSize,
+        pageNo: e
+      })) || {});
       var selectedOtherList = _this2.state.selectedOtherList;
       (0, _request.requestFetch)(fetchContent).then(function (response) {
         if (response.status === 1 && response.data !== null) {
@@ -952,10 +1004,14 @@ var Selector = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this2), "staffSelect", function (e) {
       var _this = _assertThisInitialized(_this2);
       var staffSearchContent = _this2.props.staffSearchContent;
-      var url = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=").concat(e, "&keyword=");
+      var staffInputValue = _this2.state.staffInputValue;
+      var url = "".concat(_this.state.prefixUrl, "/user/staff/search?pageSize=").concat(_this2.props.pageSize, "&pageNo=").concat(e, "&keyword=").concat(staffInputValue);
       var fetchContent = _objectSpread({
         url: url
-      }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url)) || {});
+      }, (staffSearchContent === null || staffSearchContent === void 0 ? void 0 : staffSearchContent(url, {
+        pageSize: _this2.props.pageSize,
+        pageNo: e
+      })) || {});
       (0, _request.requestFetch)(fetchContent).then(function (response) {
         // console.log(response)
         if (response.status === 1 && response.data !== null) {
@@ -1198,7 +1254,10 @@ var Selector = /*#__PURE__*/function (_React$Component) {
         tabConfig = _this$props.tabConfig,
         isWechat = _this$props.isWechat,
         isRule = _this$props.isRule,
-        isOrg = _this$props.isOrg;
+        isOrg = _this$props.isOrg,
+        isDragTable = _this$props.isDragTable,
+        userColumns = _this$props.userColumns;
+      var userColumnsCopy = userColumns || _colmuns.multiColumns[locale];
       var loopData = function loopData(data) {
         return data.map(function (item) {
           var index = item.orgName.indexOf(_this.state.orgInputValue);
@@ -1278,13 +1337,27 @@ var Selector = /*#__PURE__*/function (_React$Component) {
         onClick: _this.clickSearch,
         className: 'searchIcon',
         type: "uf-search"
-      })), /*#__PURE__*/_react["default"].createElement(MultiSelectTable, {
+      })), isDragTable ? /*#__PURE__*/_react["default"].createElement(DragColumnTable, {
         scroll: {
           y: 210
         }
         // columns={multiColumns}
         ,
-        columns: _colmuns.multiColumns[locale],
+        columns: userColumnsCopy,
+        multiSelect: _utils.multiSelectType,
+        getSelectedDataFunc: _this.getUserList,
+        data: _this.state.multiShowList,
+        emptyText: function emptyText() {
+          return _this.props.emptyText(i18n[locale].noData);
+        },
+        dragborder: true
+      }) : /*#__PURE__*/_react["default"].createElement(MultiSelectTable, {
+        scroll: {
+          y: 210
+        }
+        // columns={multiColumns}
+        ,
+        columns: userColumnsCopy,
         multiSelect: _utils.multiSelectType,
         getSelectedDataFunc: _this.getUserList,
         data: _this.state.multiShowList,
@@ -1320,7 +1393,20 @@ var Selector = /*#__PURE__*/function (_React$Component) {
         onClick: _this.clickSearch,
         className: 'searchIcon',
         type: "uf-search"
-      })), /*#__PURE__*/_react["default"].createElement(MultiSelectTable, {
+      })), isDragTable ? /*#__PURE__*/_react["default"].createElement(DragColumnTable, {
+        id: 'role',
+        scroll: {
+          y: 210
+        },
+        columns: _colmuns.roleMultiCol[locale],
+        multiSelect: _utils.multiSelectType,
+        getSelectedDataFunc: _this.getRoleList,
+        data: _this.state.roleShowList,
+        emptyText: function emptyText() {
+          return _this.props.emptyText(i18n[locale].noData);
+        },
+        dragborder: true
+      }) : /*#__PURE__*/_react["default"].createElement(MultiSelectTable, {
         id: 'role',
         scroll: {
           y: 210
@@ -1355,11 +1441,8 @@ var Selector = /*#__PURE__*/function (_React$Component) {
         // placeholder={'请输入您要查找的组织'}
         ,
         placeholder: i18n[locale].pleaseOrg,
-        className: 'rc-s-search'
-      }), /*#__PURE__*/_react["default"].createElement(_tinper.Icon, {
-        onClick: _this.clickSearch,
-        className: 'searchIcon',
-        type: "uf-search"
+        className: 'rc-s-search',
+        value: _this.state.orgInputValue
       })), /*#__PURE__*/_react["default"].createElement("div", {
         className: 'clearfix'
       }, /*#__PURE__*/_react["default"].createElement("div", {
@@ -1377,7 +1460,17 @@ var Selector = /*#__PURE__*/function (_React$Component) {
         onCheck: _this.treeOnCheck
       }, loopData(_this.state.orgTreeList))), /*#__PURE__*/_react["default"].createElement("div", {
         className: 'orgTable'
-      }, /*#__PURE__*/_react["default"].createElement(_tinper.Table, {
+      }, isDragTable ? /*#__PURE__*/_react["default"].createElement(DragColumnRoleTable, {
+        scroll: {
+          y: 440
+        },
+        columns: _colmuns.orgCol[locale],
+        data: _this.state.orgShowList,
+        emptyText: function emptyText() {
+          return _this.props.emptyText(i18n[locale].noData);
+        },
+        dragborder: true
+      }) : /*#__PURE__*/_react["default"].createElement(_tinper.Table, {
         scroll: {
           y: 440
         },
@@ -1580,7 +1673,19 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       }, i18n[locale].choose, "\uFF1A", _this.state.selectedUserData.length), /*#__PURE__*/_react["default"].createElement("span", {
         className: 'clear',
         onClick: _this.deSelectAll.bind(this, 1)
-      }, i18n[locale].clean))), /*#__PURE__*/_react["default"].createElement(_tinper.Table, {
+      }, i18n[locale].clean))), isDragTable ? /*#__PURE__*/_react["default"].createElement(DragColumnRoleTable, {
+        scroll: {
+          y: 130
+        },
+        columns: _colmuns.selectedUserCol[locale],
+        data: _this.state.selectedUserData,
+        hoverContent: _this.hoverDelIcon,
+        onRowHover: _this.onRowHover,
+        emptyText: function emptyText() {
+          return _this.props.emptyText(i18n[locale].noData);
+        },
+        dragborder: true
+      }) : /*#__PURE__*/_react["default"].createElement(_tinper.Table, {
         scroll: {
           y: 130
         },
@@ -1602,7 +1707,19 @@ var Selector = /*#__PURE__*/function (_React$Component) {
       }, i18n[locale].choose, "\uFF1A", _this.state.selectedOtherList.length), /*#__PURE__*/_react["default"].createElement("span", {
         className: 'clear',
         onClick: _this.deSelectAll.bind(this, 0)
-      }, i18n[locale].clean))), /*#__PURE__*/_react["default"].createElement(_tinper.Table, {
+      }, i18n[locale].clean))), isDragTable ? /*#__PURE__*/_react["default"].createElement(DragColumnRoleTable, {
+        scroll: {
+          y: 130
+        },
+        columns: _colmuns.selectedUserCol[locale],
+        data: _this.state.selectedOtherList,
+        hoverContent: _this.hoverDelOtherIcon,
+        onRowHover: _this.onRowOtherHover,
+        emptyText: function emptyText() {
+          return _this.props.emptyText(i18n[locale].noData);
+        },
+        dragborder: true
+      }) : /*#__PURE__*/_react["default"].createElement(_tinper.Table, {
         scroll: {
           y: 130
         },
@@ -1626,5 +1743,4 @@ var Selector = /*#__PURE__*/function (_React$Component) {
 }(_react["default"].Component);
 Selector.defaultProps = defaultProps;
 Selector.propTypes = propTypes;
-var _default = Selector;
-exports["default"] = _default;
+var _default = exports["default"] = Selector;

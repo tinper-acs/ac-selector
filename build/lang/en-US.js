@@ -34,7 +34,7 @@ var zh_CN = {
   //  规则
   rule: 'Rule',
   //  未知部门
-  unknPart: 'Unknown Department',
+  unknPart: '',
   //  用户
   user: 'User',
   //  未知姓名
@@ -67,5 +67,4 @@ var zh_CN = {
   addMsgAcpt: 'Add message recipient',
   wechat: 'WeChat'
 };
-var _default = zh_CN;
-exports["default"] = _default;
+var _default = exports["default"] = zh_CN;

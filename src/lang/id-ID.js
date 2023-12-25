@@ -28,7 +28,7 @@ const id_ID = {
     //  规则
     rule:'aturan',
     //  未知部门
-    unknPart:'Sektor yang tidak diketahui',
+    unknPart:'',
     //  用户
     user:'Pengguna',
     //  未知姓名

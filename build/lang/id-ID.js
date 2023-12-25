@@ -34,7 +34,7 @@ var id_ID = {
   //  规则
   rule: 'aturan',
   //  未知部门
-  unknPart: 'Sektor yang tidak diketahui',
+  unknPart: '',
   //  用户
   user: 'Pengguna',
   //  未知姓名
@@ -67,5 +67,4 @@ var id_ID = {
   addMsgAcpt: 'Tambahkan penerima pesan',
   wechat: 'wechat'
 };
-var _default = id_ID;
-exports["default"] = _default;
+var _default = exports["default"] = id_ID;

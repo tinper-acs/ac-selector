@@ -13,7 +13,7 @@ const zh_CN = {
   org: '組織',
   modify: '修改人',
   rule: '規則',
-  unknPart: '未知部門',
+  unknPart: '',
   user: '用戶',
   unknName: '未知姓名',
   unknEmail: '未知郵箱',

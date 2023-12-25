@@ -238,7 +238,7 @@ export const selectData = [
 
 export const selectedUser = [
 	{
-		orgName: '未知部门',
+		orgName: '',
 		email: 'zhaojian770627@163.com',
 		username: 'zhaojianc',
 		mobile: '18601913836',
@@ -247,7 +247,7 @@ export const selectedUser = [
 		typeCode: 0
 	},
 	{
-		orgName: '未知部门',
+		orgName: '',
 		email: 'zongtf3@yonyou.com',
 		username: '18610018262',
 		mobile: '18610018262',
@@ -256,7 +256,7 @@ export const selectedUser = [
 		typeCode: 0
 	},
 	{
-		orgName: '未知部门',
+		orgName: '',
 		email: 'YHT-105-5841559369734972@yht.com',
 		username: 'aaa',
 		mobile: '15810624300',

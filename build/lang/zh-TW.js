@@ -19,7 +19,7 @@ var zh_CN = {
   org: '組織',
   modify: '修改人',
   rule: '規則',
-  unknPart: '未知部門',
+  unknPart: '',
   user: '用戶',
   unknName: '未知姓名',
   unknEmail: '未知郵箱',
@@ -38,5 +38,4 @@ var zh_CN = {
   addMsgAcpt: '添加消息接收人',
   wechat: '微信'
 };
-var _default = zh_CN;
-exports["default"] = _default;
+var _default = exports["default"] = zh_CN;

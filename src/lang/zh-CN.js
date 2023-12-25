@@ -28,7 +28,7 @@ const zh_CN = {
   //  规则
   rule:'规则',
   //  未知部门
-  unknPart:'未知部门',
+  unknPart:'',
   //  用户
   user:'用户',
   //  未知姓名

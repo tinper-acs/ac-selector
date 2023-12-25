@@ -14,7 +14,7 @@ import {
 } from './components/tinper'
 import './Selector.css'
 
-const {multiSelect} = Table
+const {multiSelect, dragColumn} = Table
 import { selectedUserCol, roleMultiCol, orgCol, multiColumns,pageLocale, wechatMultiCol } from './colmuns'
 import { requestFetch } from './request'
 import {
@@ -39,6 +39,8 @@ import {
 } from './utils'
 
 let MultiSelectTable = multiSelect(Table, Checkbox)
+let DragColumnTable = dragColumn(MultiSelectTable)
+let DragColumnRoleTable = dragColumn(Table)
 
 const { TabPane } = Tabs
 const TreeNode = Tree.TreeNode
@@ -82,7 +84,8 @@ const defaultProps = {
   treeConfig:[],
   pageSize:40,
   isRule: true,
-  isOrg: true
+  isOrg: true,
+  isDragTable: false
 }
 
 class Selector extends React.Component {
@@ -396,15 +399,17 @@ class Selector extends React.Component {
   // 删除某一项
   delUser = () => {
     let { multiShowList, selectedUserData } = this.state
-    multiShowList = multiShowList.map(item => {
+    let _list = [...multiShowList]
+    _list = _list.map(item => {
       if (item.userid === selectedUserData[this.delIndex].userid) {
         item._checked = false
         return item
       }
+      return item
     })
     selectedUserData.splice(this.delIndex, 1)
     this.setState({
-      multiShowList: multiShowList,
+      multiShowList: [..._list],
       selectedUserData: [...selectedUserData],
       selectedCount: selectedUserData.length
     })
@@ -457,7 +462,8 @@ class Selector extends React.Component {
         reciving: record.orgName
           ? `${record.username}(${record.orgName})`
           : // : `${record.username}(未知部门)`
-            `${record.username}(${langs[this.state.locale]})`
+            // `${record.username}(${langs[this.state.locale]})`
+            `${record.username}`
       })
       if (delList.includes(currItem.userid)) {
         _list.push(currItem)
@@ -764,7 +770,9 @@ class Selector extends React.Component {
     this.setState({
       extends:'',
       activeKey,
-      orgInputValue:""
+      orgInputValue:"",
+      staffInputValue: '',
+      roleInputValue: ''
       // defaultLabel: setLabel(activeKey)
     })
     if(activeKey === '1'){
@@ -1000,7 +1008,8 @@ class Selector extends React.Component {
   roleSelect = e => {
     const _this = this
     const {roleSearchContent} = this.props
-    let url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=`
+    const {roleInputValue} = this.state
+    let url = `${_this.state.prefixUrl}/user/role/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=${roleInputValue}`
     const fetchContent = {url, ...(roleSearchContent?.(url, {pageSize: this.props.pageSize, pageNo: e}) || {})};
 
     let { selectedOtherList } = this.state
@@ -1028,7 +1037,8 @@ class Selector extends React.Component {
   staffSelect = e => {
     const _this = this
     const {staffSearchContent} = this.props
-    let url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=`
+    const {staffInputValue} = this.state
+    let url = `${_this.state.prefixUrl}/user/staff/search?pageSize=${this.props.pageSize}&pageNo=${e}&keyword=${staffInputValue}`
     const fetchContent = {url, ...(staffSearchContent?.(url, {pageSize: this.props.pageSize, pageNo: e}) || {})};
 
     requestFetch(fetchContent)
@@ -1166,7 +1176,8 @@ class Selector extends React.Component {
   render() {
     const _this = this
     const { locale,weArray,weList,weIndex,weLeftVal,weSearchVal } = this.state
-    const { tabConfig,isWechat,isRule,isOrg } = this.props
+    const { tabConfig,isWechat,isRule,isOrg,isDragTable, userColumns } = this.props
+    let userColumnsCopy = userColumns || multiColumns[locale]
     const loopData = data =>
       data.map(item => {
         const index = item.orgName.indexOf(_this.state.orgInputValue)
@@ -1255,7 +1266,31 @@ class Selector extends React.Component {
                       type="uf-search"
                     />
                   </div>
-                  <MultiSelectTable
+                  {
+                    isDragTable ? (
+                      <DragColumnTable
+                        scroll={{ y: 210 }}
+                        // columns={multiColumns}
+                        columns={userColumnsCopy}
+                        multiSelect={multiSelectType}
+                        getSelectedDataFunc={_this.getUserList}
+                        data={_this.state.multiShowList}
+                        emptyText={() => _this.props.emptyText(i18n[locale].noData)}
+                        dragborder={true}
+                      />
+                    ) : (
+                      <MultiSelectTable
+                        scroll={{ y: 210 }}
+                        // columns={multiColumns}
+                        columns={userColumnsCopy}
+                        multiSelect={multiSelectType}
+                        getSelectedDataFunc={_this.getUserList}
+                        data={_this.state.multiShowList}
+                        emptyText={() => _this.props.emptyText(i18n[locale].noData)}
+                      />
+                    )
+                  }
+                  {/* <MultiSelectTable
                     scroll={{ y: 210 }}
                     // columns={multiColumns}
                     columns={multiColumns[locale]}
@@ -1263,7 +1298,7 @@ class Selector extends React.Component {
                     getSelectedDataFunc={_this.getUserList}
                     data={_this.state.multiShowList}
                     emptyText={() => _this.props.emptyText(i18n[locale].noData)}
-                  />
+                  /> */}
                   <Pagination
                     className={'selector_pagination'}
                     first
@@ -1296,7 +1331,31 @@ class Selector extends React.Component {
                       type="uf-search"
                     />
                   </div>
-                  <MultiSelectTable
+                  {
+                    isDragTable ? (
+                      <DragColumnTable
+                        id={'role'}
+                        scroll={{ y: 210 }}
+                        columns={roleMultiCol[locale]}
+                        multiSelect={multiSelectType}
+                        getSelectedDataFunc={_this.getRoleList}
+                        data={_this.state.roleShowList}
+                        emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                        dragborder={true}
+                      />
+                    ) : (
+                      <MultiSelectTable
+                        id={'role'}
+                        scroll={{ y: 210 }}
+                        columns={roleMultiCol[locale]}
+                        multiSelect={multiSelectType}
+                        getSelectedDataFunc={_this.getRoleList}
+                        data={_this.state.roleShowList}
+                        emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                      />
+                    )
+                  }
+                  {/* <MultiSelectTable
                     id={'role'}
                     scroll={{ y: 210 }}
                     columns={roleMultiCol[locale]}
@@ -1304,7 +1363,7 @@ class Selector extends React.Component {
                     getSelectedDataFunc={_this.getRoleList}
                     data={_this.state.roleShowList}
                     emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
-                  />
+                  /> */}
                   <Pagination
                     className={'selector_pagination'}
                     first
@@ -1328,6 +1387,7 @@ class Selector extends React.Component {
                       // placeholder={'请输入您要查找的组织'}
                       placeholder={i18n[locale].pleaseOrg}
                       className={'rc-s-search'}
+                      value={_this.state.orgInputValue}
                     />
                     {/* <Icon
                       onClick={_this.clickSearch}
@@ -1352,12 +1412,30 @@ class Selector extends React.Component {
                       </Tree>
                     </div>
                     <div className={'orgTable'}>
-                      <Table
+                      {
+                        isDragTable ? (
+                          <DragColumnRoleTable
+                            scroll={{ y: 440 }}
+                            columns={orgCol[locale]}
+                            data={_this.state.orgShowList}
+                            emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                            dragborder={true}
+                          />
+                        ) : (
+                          <Table
+                            scroll={{ y: 440 }}
+                            columns={orgCol[locale]}
+                            data={_this.state.orgShowList}
+                            emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                          />
+                        )
+                      }
+                      {/* <Table
                         scroll={{ y: 440 }}
                         columns={orgCol[locale]}
                         data={_this.state.orgShowList}
                         emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </TabPane> : null}
@@ -1545,14 +1623,36 @@ class Selector extends React.Component {
                     </span>
                   </p>
                 </div>
-                <Table
+                {
+                  isDragTable ? (
+                    <DragColumnRoleTable
+                      scroll={{ y: 130 }}
+                      columns={selectedUserCol[locale]}
+                      data={_this.state.selectedUserData}
+                      hoverContent={_this.hoverDelIcon}
+                      onRowHover={_this.onRowHover}
+                      emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                      dragborder={true}
+                    />
+                  ) : (
+                    <Table
+                      scroll={{ y: 130 }}
+                      columns={selectedUserCol[locale]}
+                      data={_this.state.selectedUserData}
+                      hoverContent={_this.hoverDelIcon}
+                      onRowHover={_this.onRowHover}
+                      emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                    />
+                  )
+                }
+                {/* <Table
                   scroll={{ y: 130 }}
                   columns={selectedUserCol[locale]}
                   data={_this.state.selectedUserData}
                   hoverContent={_this.hoverDelIcon}
                   onRowHover={_this.onRowHover}
                   emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
-                />
+                /> */}
               </div>
               <div>
                 <div className={`selectedUser clearfix`}>
@@ -1571,14 +1671,36 @@ class Selector extends React.Component {
                     </span>
                   </p>
                 </div>
-                <Table
+                {    
+                  isDragTable ? (
+                    <DragColumnRoleTable
+                      scroll={{ y: 130 }}
+                      columns={selectedUserCol[locale]}
+                      data={_this.state.selectedOtherList}
+                      hoverContent={_this.hoverDelOtherIcon}
+                      onRowHover={_this.onRowOtherHover}
+                      emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                      dragborder={true}
+                    />
+                  ) : (
+                    <Table
+                      scroll={{ y: 130 }}
+                      columns={selectedUserCol[locale]}
+                      data={_this.state.selectedOtherList}
+                      hoverContent={_this.hoverDelOtherIcon}
+                      onRowHover={_this.onRowOtherHover}
+                      emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
+                    />
+                  )
+                }
+                {/* <Table
                   scroll={{ y: 130 }}
                   columns={selectedUserCol[locale]}
                   data={_this.state.selectedOtherList}
                   hoverContent={_this.hoverDelOtherIcon}
                   onRowHover={_this.onRowOtherHover}
                   emptyText={()=>_this.props.emptyText(i18n[locale].noData)}
-                />
+                /> */}
               </div>
             </div>
           </div>
